@@ -24,6 +24,16 @@ sys_getpid(void)
 }
 
 uint64
+sys_trace(void)
+{
+  int n;
+  if(argint(0, &n) < 0)
+    return -1;
+  trace(n);
+  return 0;
+}
+
+uint64
 sys_fork(void)
 {
   return fork();

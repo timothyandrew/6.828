@@ -287,6 +287,7 @@ fork(void)
     release(&np->lock);
     return -1;
   }
+  np->trace = p->trace;
   np->sz = p->sz;
 
   // copy saved user registers.
@@ -653,4 +654,11 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+void
+trace(int mask)
+{
+  struct proc *p = myproc();
+  p->trace = mask;
 }
