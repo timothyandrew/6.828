@@ -105,3 +105,27 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_sysinfo(void)
+{
+  uint64 ip;
+  argaddr(0, &ip);
+
+  uint64 virt_page_start = PGROUNDDOWN(ip);
+  uint64 phy_page_start = walkaddr(myproc()->pagetable, virt_page_start);
+
+  if (phy_page_start == 0) {
+    return -1;
+  }
+
+  uint64 phy = phy_page_start + (ip - virt_page_start);
+
+  // printf("Virt Addr: %p\n", ip);
+  // printf("Phy Addr: %p\n", phy);
+
+  struct sysinfo *info = (struct sysinfo *) phy;
+  sysinfo(info);
+  return 0;
+}
+

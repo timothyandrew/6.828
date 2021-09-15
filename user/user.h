@@ -1,9 +1,12 @@
+#include "kernel/sysinfo.h"
+
 struct stat;
 struct rtcdate;
 
 // system calls
 int fork(void);
 int trace(int);
+int sysinfo(struct sysinfo *);
 int exit(int) __attribute__((noreturn));
 int wait(int*);
 int pipe(int*);

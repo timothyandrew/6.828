@@ -662,3 +662,16 @@ trace(int mask)
   struct proc *p = myproc();
   p->trace = mask;
 }
+
+void sysinfo(struct sysinfo *s) {
+  s->freemem = kfreemem();
+
+  int nproc = 0;
+  for(int i = 0; i < NPROC; i++) {
+    if (proc[i].state != UNUSED) {
+      nproc++;
+    }
+  }
+
+  s->nproc = nproc;
+}
